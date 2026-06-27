@@ -157,25 +157,3 @@ pytest tests/ -v
 ```
 
 ---
-
-## Deployment (AWS Lambda)
-
-1. Add AWS secrets to GitHub repository settings
-2. Push to `main` → GitHub Actions runs lint → test → build → deploy automatically
-3. The Lambda function is updated with the new container image
-
-For Azure Container Apps, change the deploy step in `.github/workflows/deploy.yml` to use `az containerapp update`.
-
----
-
-## Built for
-
-This project demonstrates skills from the **Senior Consultant – AI & Analytics** job description:
-- LLM + GenAI development (RAG pipeline with Claude/GPT-4)
-- Agentic AI frameworks (LangChain LCEL chains)
-- Cloud deployment (AWS Lambda + Docker)
-- MLOps (CI/CD, RAGAS evaluation, monitoring)
-- NLP and vector search
-- Python, FastAPI, REST APIs
-- Data storytelling (source citations, latency metrics)
-# RAG_bot
