@@ -28,11 +28,9 @@ jobs:
           subscription-id: ${{ secrets.RAGASSISTANT1_AZURE_SUBSCRIPTION_ID }}
 
       - name: Log in to Azure Container Registry
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            TOKEN=$(az acr login --name ragknowledge --expose-token --output tsv --query accessToken)
-            echo "$TOKEN" | docker login ragknowledge.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
+        run: |
+          TOKEN=$(az acr login --name ragknowledge --expose-token --output tsv --query accessToken)
+          echo "$TOKEN" | docker login ragknowledge.azurecr.io --username 00000000-0000-0000-0000-000000000000 --password-stdin
 
       - name: Build Docker Image
         run: |
@@ -43,11 +41,9 @@ jobs:
           docker push ragknowledge.azurecr.io/rag-streamlit-ui:${{ github.sha }}
 
       - name: Deploy to Azure Container App
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az extension add --name containerapp --yes
-            az containerapp update \
-              --name ragassistant-1 \
-              --resource-group rg-rag-assistant \
-              --image ragknowledge.azurecr.io/rag-streamlit-ui:${{ github.sha }}
+        run: |
+          az extension add --name containerapp --yes
+          az containerapp update \
+            --name ragassistant-1 \
+            --resource-group rg-rag-assistant \
+            --image ragknowledge.azurecr.io/rag-streamlit-ui:${{ github.sha }}
