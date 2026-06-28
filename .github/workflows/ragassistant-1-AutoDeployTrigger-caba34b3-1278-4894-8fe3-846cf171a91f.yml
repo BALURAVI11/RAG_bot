@@ -43,6 +43,23 @@ jobs:
       - name: Deploy to Azure Container App
         run: |
           az extension add --name containerapp --yes
+          
+          # Enable admin credentials on the registry
+          az acr update --name ragknowledge --admin-enabled true
+          
+          # Fetch credentials
+          ACR_USER=$(az acr credential show --name ragknowledge --query username --output tsv)
+          ACR_PASS=$(az acr credential show --name ragknowledge --query "passwords[0].value" --output tsv)
+          
+          # Link the registry credentials to the Container App
+          az containerapp registry set \
+            --name ragassistant-1 \
+            --resource-group rg-rag-assistant \
+            --server ragknowledge.azurecr.io \
+            --username "$ACR_USER" \
+            --password "$ACR_PASS"
+            
+          # Deploy the updated image
           az containerapp update \
             --name ragassistant-1 \
             --resource-group rg-rag-assistant \
