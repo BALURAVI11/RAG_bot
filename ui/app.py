@@ -2,6 +2,13 @@
 from __future__ import annotations
 
 import sys
+# Hot-swap sqlite3 with pysqlite3 for ChromaDB compatibility on Streamlit Cloud
+try:
+    __import__('pysqlite3')
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
+
 import os
 from pathlib import Path
 
