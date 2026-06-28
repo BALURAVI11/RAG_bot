@@ -1,0 +1,29 @@
+# Exclude virtual environments
+venv/
+.venv/
+test_venv*/
+
+# Exclude local database and uploaded files
+data/
+db/
+*.db
+*.sqlite3
+
+# Exclude Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Exclude local environment files containing API keys
+.env
+.env.local
+
+# Exclude Git files
+.git
+.gitignore
+.github/
+
+# Exclude OS generated files
+.DS_Store
+Thumbs.db
